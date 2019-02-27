@@ -36,44 +36,14 @@ class SimpleRequestHandler(BaseHTTPRequestHandler):
             self.end_headers()
             self.wfile.write(f'<!DOCTYPE html><html><head><title>cowsay</title><head><body><header><nav><ul><li></li><ul></nav><header><main> <pre>{msg}</pre> </main></body></html>'.encode())
             return
+    def do_POST(self):
+        content_length = int(self.headers['Content-Length'])
+        body = self.rfile.read(content_length)
+        self.send_response(200)
+        self.end_headers()
+        self.self_resposne(self.wfile.write('This is a post request'))
+        self.wfile.write('Put something here')
 
-
-
-
-
-
-        # elif parsed_path.path == ('/cowxxxxx'):
-
-        #     self.wfile.write(b'we did the thing with the qs')
-        #     try:
-
-        #         cat = parsed_qs['category'][0]
-        #         self.wfile.write(b'we did the thing with the qs')
-        #     except KeyError:
-        #         self.send_response_only(400)
-        #         self.end_headers()
-        #         return
-
-        #     self.send_response(200)
-        #     self.end_headers()
-        #     self.wfile.write(b'we did the thing with the qs')
-        #     return
-        # elif parsed_path.path == '/cow':
-        #     try:
-        #         cat = parsed_qs['category'][0]
-        #     except KeyError:
-        #         self.send_response_only(400)
-        #         self.end_headers()
-        #         return
-
-            # cheese = cow.Moose()
-            # msg = cheese.milk('{parsed_qs.text[0]}')
-
-            # self.send_response(200)
-            # self.send_header('Content-type', 'text/html')
-            # self.end_headers()
-            # self.wfile.write(f'<!DOCTYPE html><html><head><title>cowsay</title><head><body><header><nav><ul><li><a href=“/cow”>cowsay</a></li><ul></nav><header><main> <pre>{msg}</pre> project description defining how users can further interact with the application </main></body></html>'.encode())
-            # return
 
 def run_forever():
     port = 5000
