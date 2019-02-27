@@ -6,10 +6,9 @@ verify_ssl = true
 [dev-packages]
 
 [packages]
-cowpie = "*"
-httppie = "*"
-httppy = "*"
+cowpy = "*"
 httpie = "*"
+
 
 [requires]
 python_version = "3.7"
