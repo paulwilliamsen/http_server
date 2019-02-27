@@ -1,6 +1,6 @@
 from server import SimpleRequestHandler
 import requests as req
-import pytest
+import pytest 
 
 
 def test_server_get_home_route_status_200():
