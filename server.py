@@ -7,6 +7,10 @@ from urllib.parse import urlparse, parse_qs
 
 class SimpleRequestHandler(BaseHTTPRequestHandler):
     def do_GET(self):
+        """
+        Get function that originates on a home page and allows user to enter different text in address bar to change cow
+        """
+
         parsed_path = urlparse(self.path)
         parsed_qs = parse_qs(parsed_path.query)
 
@@ -37,15 +41,22 @@ class SimpleRequestHandler(BaseHTTPRequestHandler):
             self.wfile.write(f'<!DOCTYPE html><html><head><title>cowsay</title><head><body><header><nav><ul><li></li><ul></nav><header><main> <pre>{msg}</pre> </main></body></html>'.encode())
             return
     def do_POST(self):
+        """
+        Post function that adds new cow to terminal
+        """
         content_length = int(self.headers['Content-Length'])
         body = self.rfile.read(content_length)
         self.send_response(200)
         self.end_headers()
-        self.self_resposne(self.wfile.write('This is a post request'))
+        self.self_response(self.wfile.write('This is a post request'))
         self.wfile.write('Put something here')
 
 
 def run_forever():
+    """
+    Where the server is running
+    """
+
     port = 5000
     server_address = ('', port)
     server = HTTPServer(server_address, SimpleRequestHandler)
