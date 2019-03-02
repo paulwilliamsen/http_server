@@ -12,7 +12,7 @@ run pipenv shell to start your shell
 run server.py in terminal to start the server
 navigate to localhost:(PORT) or use IP address in browser
 Change the text in address bar after
-localhost:5000/_________ to change appereance of cow
+localhost:5000/?msg=_________ to change appereance of cow
 
 
 ## Architecture

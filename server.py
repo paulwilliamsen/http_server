@@ -22,7 +22,7 @@ class SimpleRequestHandler(BaseHTTPRequestHandler):
             cheese = cow.Moose()
             example = cheese.milk('I am a cow this is what I say')
 
-            self.wfile.write(f'<!DOCTYPE html><html><head><title>cowsay</title><head><body><header><nav><ul><li><a href="/cow">cowsay</a></li><ul></nav><header><main><h1>cowsay</h1><h3>Directions</h3><p>if type in the following text into the address bar.  /cow?msg= "what you want to say" <p>  <p> an example is <strong>Localhost:5000/cow?msg="I am a cow this is what I say"<strong></p><pre>{example}</pre></main></body></html>'.encode())
+            self.wfile.write(f'<!DOCTYPE html><html><head><title>Cowsay</title><head><body><header><nav><ul><li><a href="/cow">cowsay</a></li><ul></nav><header><main><h1>cowsay</h1><h3>Directions</h3><p>if type in the following text into the address bar.  /cow?msg= "what you want to say" <p>  <p> an example is <strong>Localhost:5000/cow?msg="I am a cow this is what I say"<strong></p><pre>{example}</pre></main></body></html>'.encode())
             return
 
         elif parsed_path.path == ('/cow'):
@@ -41,17 +41,38 @@ class SimpleRequestHandler(BaseHTTPRequestHandler):
             self.end_headers()
             self.wfile.write(f'<!DOCTYPE html><html><head><title>cowsay</title><head><body><header><nav><ul><li></li><ul></nav><header><main> <pre>{msg}</pre> </main></body></html>'.encode())
             return
+        self.send_response_only(404)
+        self.end_headers()
+
+
+    def do_HEAD(self):
+        self.send_response(302)
+        self.send_header('Content-type', 'text/plain')
+        self.end_headers()
+
+
     def do_POST(self):
         """
         Post function that adds new cow to terminal
         """
-        content_length = int(self.headers['Content-Length'])
-        print(content_length)
+        try:
+            content_length = int(self.headers['Content-Length'])
+        except KeyError:
+            self.send_response_only(400)
+            self.end_headers()
+            return
+
         msg = self.rfile.read(content_length).decode()
         animal = cow.Moose()
         message = animal.milk(msg)
         print(message)
+        self.send_response(201)
+        self.end_headers()
+        self.wfile.write(b'<html><body><h1>POST!</h1></body></html>')
 
+
+def create_server():
+    return HTTPServer(('127.0.0.1',5000),SimpleRequestHandler)
 
 def run_forever():
     """
