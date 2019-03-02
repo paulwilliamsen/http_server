@@ -1,7 +1,7 @@
 # Cowpy
 
 **Author**: Paul Williamsen and Tim Schoen
-**Version**: 1.0.0
+**Version**: 1.0.1
 
 ## Overview
 An application that uses cowpy/cowsy API/console script for the cowsay-linux.
