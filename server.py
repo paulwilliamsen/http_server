@@ -1,6 +1,7 @@
 from http.server import HTTPServer, BaseHTTPRequestHandler
 from cowpy import cow
 from urllib.parse import urlparse, parse_qs
+import json
 
 
 
@@ -44,8 +45,13 @@ class SimpleRequestHandler(BaseHTTPRequestHandler):
         """
         Post function that adds new cow to terminal
         """
-        print('I am a post!')
-      
+        content_length = int(self.headers['Content-Length'])
+        print(content_length)
+        msg = self.rfile.read(content_length).decode()
+        animal = cow.Moose()
+        message = animal.milk(msg)
+        print(message)
+
 
 def run_forever():
     """
