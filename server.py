@@ -44,13 +44,8 @@ class SimpleRequestHandler(BaseHTTPRequestHandler):
         """
         Post function that adds new cow to terminal
         """
-        content_length = int(self.headers['Content-Length'])
-        body = self.rfile.read(content_length)
-        self.send_response(200)
-        self.end_headers()
-        self.self_response(self.wfile.write('This is a post request'))
-        self.wfile.write('Put something here')
-
+        print('I am a post!')
+      
 
 def run_forever():
     """
